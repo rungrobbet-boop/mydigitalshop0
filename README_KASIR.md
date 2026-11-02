@@ -68,9 +68,9 @@ Di Dashboard Cloudflare Pages, buka **Settings > Environment Variables**, lalu t
 
 | Variable | Contoh Nilai | Keterangan |
 | :--- | :--- | :--- |
-| `FIREBASE_DATABASE_URL` | `https://dapur-kuliner-rtdb.asia-southeast1.firebasedatabase.app` | URL Realtime Database |
+| `FIREBASE_DATABASE_URL` | `https://bisnis-rtdb.asia-southeast1.firebasedatabase.app` | URL Realtime Database |
 | `FIREBASE_API_KEY` | `AIzaSyDxxxxxxxxx...` | Web API Key Firebase |
-| `FIREBASE_STORAGE_BUCKET`| `dapur-kuliner.appspot.com` | Bucket Cloud Storage |
+| `FIREBASE_STORAGE_BUCKET`| `bisnis.appspot.com` | Bucket Cloud Storage |
 | `MIDTRANS_SERVER_KEY` | `Mid-server-xxxx...` | Server Key Midtrans |
 | `MIDTRANS_CLIENT_KEY` | `Mid-client-xxxx...` | Client Key Midtrans |
 | `MIDTRANS_IS_PRODUCTION` | `false` (atau `true` jika live) | Status Mode Midtrans |

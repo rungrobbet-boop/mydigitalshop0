@@ -1142,7 +1142,7 @@
                 <input type="number" x-model.number="cateringPax" @input="calculateOngkir()" :min="selectedCateringPackage.minPax" class="flex-1 text-center font-black text-lg py-2 rounded-lg border border-stone-300 bg-white" />
                 <button @click="cateringPax = cateringPax + 5; calculateOngkir()" class="w-10 h-10 rounded-lg bg-white border border-stone-300 font-bold hover:bg-stone-100 flex items-center justify-center">+</button>
               </div>
-              <span class="text-[11px] text-stone-500 mt-1 block">Estimasi total berat makanan: <strong x-text="Math.ceil(cateringPax * 0.4) + ' kg'"></strong> (~400gr/box)</span>
+              <span class="text-[11px] text-stone-500 mt-1 block">Estimasi total berat produk: <strong x-text="Math.ceil(cateringPax * 0.4) + ' kg'"></strong> (~400gr/box)</span>
             </div>
 
             <div>
@@ -1233,7 +1233,7 @@
 
             <div class="mt-4 p-3 bg-amber-50 rounded-xl border border-amber-200 text-amber-900 text-xs flex items-center gap-2">
               <i class="fa-solid fa-circle-info text-amber-600 text-base"></i>
-              <span>Untuk makanan panas & segar siap santap, kami merekomendasikan kurir <strong>Instant (GoSend / GrabExpress)</strong> agar kualitas rasa tetap maksimal.</span>
+              <span>Untuk produk siap kirim, kami merekomendasikan kurir <strong>Instant (GoSend / GrabExpress)</strong> agar kualitas produk tetap maksimal.</span>
             </div>
           </div>
 
@@ -1587,7 +1587,7 @@
           </p>
         </div>
 
-        <!-- 3 Mitra Food Delivery Apps (Rapih, Responsif, Tidak Tumpuk/Luber) -->
+        <!-- 3 Mitra Platform Pengiriman Online (Rapih, Responsif, Tidak Tumpuk/Luber) -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 lg:gap-5">
           
           <!-- Shopee Card -->
@@ -1712,7 +1712,7 @@
       <div class="relative max-w-2xl">
         <span class="text-xs font-bold uppercase tracking-wider text-brand-400 bg-brand-900/60 border border-brand-500/30 px-3 py-1 rounded-full" x-text="siteConfig.b2bBadge || 'Layanan Khusus Corporate & Event'"></span>
         <h2 class="text-2xl sm:text-4xl font-extrabold font-serif mt-3" x-text="siteConfig.b2bTitle || 'Pesanan Catering Perusahaan / B2B (Min. 50 Box)'"></h2>
-        <p class="text-stone-300 text-xs sm:text-sm mt-2 leading-relaxed" x-text="siteConfig.b2bSubtitle || 'Kebutuhan meeting kantor, seminar perusahaan, shooting, atau wedding gathering? Kami sediakan faktur pajak / invoice resmi, menu custom test food gratis, dan koordinasi langsung dengan tim admin B2B kami.'">
+        <p class="text-stone-300 text-xs sm:text-sm mt-2 leading-relaxed" x-text="siteConfig.b2bSubtitle || 'Kebutuhan meeting kantor, seminar perusahaan, shooting, atau wedding gathering? Kami sediakan faktur pajak / invoice resmi, paket custom test gratis, dan koordinasi langsung dengan tim admin B2B kami.'">
         </p>
 
         <form @submit.prevent="sendB2BWhatsApp()" class="mt-6 space-y-4">
@@ -2074,7 +2074,7 @@
         <!-- Opsi Pesan Kurir Mandiri di Tracker (Bila ada) -->
         <div x-show="activeOrder.courier && activeOrder.courier.code !== 'pickup'" class="mt-4 bg-blue-50 border border-blue-100 p-3 rounded-xl text-[11px] text-blue-800 space-y-1.5 text-left leading-snug">
           <p class="font-bold flex items-center gap-1.5"><i class="fa-solid fa-motorcycle text-sm"></i> Segera Pesan Kurir Anda</p>
-          <p>Jika makanan sudah "Selesai", Anda dapat memesan <strong x-text="activeOrder.courier ? activeOrder.courier.name : 'kurir'"></strong> secara mandiri via aplikasi. Ongkir diperkirakan <strong x-text="activeOrder.courier ? formatRupiah(activeOrder.courier.price) : 0"></strong>.</p>
+          <p>Jika pesanan sudah "Selesai", Anda dapat memesan <strong x-text="activeOrder.courier ? activeOrder.courier.name : 'kurir'"></strong> secara mandiri via aplikasi. Ongkir diperkirakan <strong x-text="activeOrder.courier ? formatRupiah(activeOrder.courier.price) : 0"></strong>.</p>
           <div class="flex flex-wrap items-center gap-2 pt-1.5">
             <a href="https://gojek.com" target="_blank" @click="alert('Perkiraan ongkir mungkin sedikit berbeda pada platform kurir pilihan anda dan harga yang pasti akan mengikuti yang tertera pada aplikasi kurir terpilih.')" class="px-3 py-1.5 bg-[#00aa13] text-white rounded-lg font-bold hover:bg-green-700 transition flex items-center gap-1.5"><i class="fa-solid fa-motorcycle"></i> Buka Gojek</a>
             <a href="https://grab.com" target="_blank" @click="alert('Perkiraan ongkir mungkin sedikit berbeda pada platform kurir pilihan anda dan harga yang pasti akan mengikuti yang tertera pada aplikasi kurir terpilih.')" class="px-3 py-1.5 bg-[#00b14f] text-white rounded-lg font-bold hover:bg-emerald-700 transition flex items-center gap-1.5"><i class="fa-solid fa-route"></i> Buka Grab</a>
@@ -3236,7 +3236,7 @@
                       </h5>
                       <p class="text-xs text-stone-500 mt-1 leading-relaxed">
                         <strong>ON</strong> — tampil tombol 📡 <em>Lacak Pesanan</em> di bottom-left.<br>
-                        <strong>OFF</strong> — tampil tombol 🛵 <em>Pesan Online Platform</em> (ShopeeFood / GoFood / GrabFood).
+                        <strong>OFF</strong> — tampil tombol 🛵 <em>Pesan Online Platform</em> (Shopee / Blibli / Tokopedia).
                       </p>
                     </div>
                   </div>
@@ -3872,7 +3872,7 @@
         <div x-show="adminActiveTab === 'texts'" class="space-y-5">
           <div class="bg-stone-50 p-4 rounded-2xl border border-stone-200">
             <h4 class="font-extrabold text-stone-900 text-sm">4. Teks Halaman, Alamat Dapur & Jam Operasional</h4>
-            <p class="text-xs text-stone-500">Edit semua teks utama, navigasi, banner promo, alamat fisik, dan informasi footer restoran.</p>
+            <p class="text-xs text-stone-500">Edit semua teks utama, navigasi, banner promo, alamat fisik, dan informasi footer toko.</p>
           </div>
 
           <!-- Banner Promo Atas (Ribbon) -->
@@ -4312,19 +4312,19 @@
               </div>
               <div>
                 <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Project ID (projectId) *</label>
-                <input type="text" x-model="firebaseConfigInput.projectId" placeholder="dapur-kuliner-viral-xxxx" class="w-full p-2.5 rounded-xl border border-stone-300 text-xs bg-white font-mono" />
+                <input type="text" x-model="firebaseConfigInput.projectId" placeholder="bisnis-usaha-viral-xxxx" class="w-full p-2.5 rounded-xl border border-stone-300 text-xs bg-white font-mono" />
               </div>
               <div>
                 <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Database URL (databaseURL) *</label>
-                <input type="url" x-model="firebaseConfigInput.databaseURL" placeholder="https://dapur-xxxx-default-rtdb.asia-southeast1.firebasedatabase.app" class="w-full p-2.5 rounded-xl border border-stone-300 text-xs bg-white font-mono" />
+                <input type="url" x-model="firebaseConfigInput.databaseURL" placeholder="https://bisnis-xxxx-default-rtdb.asia-southeast1.firebasedatabase.app" class="w-full p-2.5 rounded-xl border border-stone-300 text-xs bg-white font-mono" />
               </div>
               <div>
                 <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Auth Domain (authDomain)</label>
-                <input type="text" x-model="firebaseConfigInput.authDomain" placeholder="dapur-xxxx.firebaseapp.com" class="w-full p-2.5 rounded-xl border border-stone-300 text-xs bg-white font-mono" />
+                <input type="text" x-model="firebaseConfigInput.authDomain" placeholder="bisnis-xxxx.firebaseapp.com" class="w-full p-2.5 rounded-xl border border-stone-300 text-xs bg-white font-mono" />
               </div>
               <div>
                 <label class="block text-xs font-bold text-stone-700 uppercase mb-1">Storage Bucket (storageBucket)</label>
-                <input type="text" x-model="firebaseConfigInput.storageBucket" placeholder="dapur-xxxx.firebasestorage.app" class="w-full p-2.5 rounded-xl border border-stone-300 text-xs bg-white font-mono" />
+                <input type="text" x-model="firebaseConfigInput.storageBucket" placeholder="bisnis-xxxx.firebasestorage.app" class="w-full p-2.5 rounded-xl border border-stone-300 text-xs bg-white font-mono" />
               </div>
               <div>
                 <label class="block text-xs font-bold text-stone-700 uppercase mb-1">App ID (appId)</label>
@@ -4553,7 +4553,7 @@ git push -u origin main</pre>
               <span>Serverless Functions & Custom Domain</span>
             </h5>
             <p class="text-xs text-stone-600 leading-relaxed">
-              Direktori <code>/functions/payment.js</code> dan <code>/functions/ongkir.js</code> akan otomatis dideteksi dan dieksekusi oleh Cloudflare Pages Functions di jaringan edge global tanpa biaya server tambahan. Anda juga dapat menambahkan <strong>Custom Domain</strong> Anda sendiri (seperti <code>order.dapurkuliner.com</code>) gratis dengan sertifikat SSL otomatis.
+              Direktori <code>/functions/payment.js</code> dan <code>/functions/ongkir.js</code> akan otomatis dideteksi dan dieksekusi oleh Cloudflare Pages Functions di jaringan edge global tanpa biaya server tambahan. Anda juga dapat menambahkan <strong>Custom Domain</strong> Anda sendiri (seperti <code>order.bisniskami.com</code>) gratis dengan sertifikat SSL otomatis.
             </p>
           </div>
         </div>
@@ -5478,7 +5478,7 @@ git push -u origin main</pre>
     <!-- CASE B: Tracker OFF → Pesan Online Platform (x-show, BUKAN <template x-if>) -->
     <div x-show="siteConfig.showTrackerButton === false && availablePlatformsList.length > 0" class="flex flex-col gap-3 items-start">
 
-      <!-- Platform buttons (expanded) — stacked vertikal di atas tombol utama (dari bawah: ShopeeFood → GoFood → GrabFood) -->
+      <!-- Platform buttons (expanded) — stacked vertikal di atas tombol utama (dari bawah: Shopee → Blibli → Tokopedia) -->
       <div x-show="showOrderPlatformMenu" class="flex flex-col gap-3 items-start">
         <template x-for="p in availablePlatformsList.slice().reverse()" :key="'plat-' + p.id">
           <button
@@ -5508,7 +5508,7 @@ git push -u origin main</pre>
           <path d="M18 39 C18 29.5 23.8 26.5 31 26.5 C38.2 26.5 44 29.5 44 39 Z" stroke="#ea580c" stroke-width="2.8" stroke-linejoin="round"/>
           <rect x="15.5" y="39" width="31" height="3.2" rx="1.6" stroke="#ea580c" stroke-width="2.4" fill="white"/>
           <!-- Tulisan "food" -->
-          <text x="31" y="55.5" text-anchor="middle" fill="#ea580c" font-family="Inter, Arial, sans-serif" font-weight="700" font-size="14.5" letter-spacing="-0.4">food</text>
+          <text x="31" y="55.5" text-anchor="middle" fill="#ea580c" font-family="Inter, Arial, sans-serif" font-weight="700" font-size="14.5" letter-spacing="-0.4">barang</text>
           <!-- Helm & Pengendara -->
           <circle cx="57.5" cy="30" r="6.8" stroke="#ea580c" stroke-width="2.8"/>
           <path d="M58.5 27.5 H64 C64 30.5 62.5 32.5 58.5 32.5 Z" stroke="#ea580c" stroke-width="2" stroke-linejoin="round"/>
@@ -5599,7 +5599,7 @@ git push -u origin main</pre>
           </span>
           <p class="text-stone-300" x-text="siteConfig.operationalHours"></p>
         </div>
-        <p class="text-[10px] text-stone-500 mt-2">Menerima pesanan harian, catering kantor, & delivery online.</p>
+        <p class="text-[10px] text-stone-500 mt-2">Menerima pesanan harian, paket kantor, & delivery online.</p>
       </div>
 
       <!-- Manajemen Bisnis & Panel Admin -->
@@ -6430,7 +6430,7 @@ git push -u origin main</pre>
           { courier_code: 'jnt', courier_name: 'J&T Express', courier_service_name: 'EZ Reguler (Pack Box)', price: 12000, estimated_etd: 'Besok Sampai (1 Hari)', badge_color: 'border-red-500 text-red-700 bg-red-50', icon: 'fa-bolt', recommended: false },
           { courier_code: 'sicepat', courier_name: 'SiCepat', courier_service_name: 'BEST (Besok Sampai)', price: 13000, estimated_etd: 'Besok Sampai (1 Hari)', badge_color: 'border-orange-500 text-orange-700 bg-orange-50', icon: 'fa-gauge-high', recommended: false },
           { courier_code: 'jne', courier_name: 'JNE', courier_service_name: 'YES (Yakin Esok Sampai)', price: 15000, estimated_etd: '1 Hari Kerja', badge_color: 'border-blue-500 text-blue-700 bg-blue-50', icon: 'fa-truck-fast', recommended: false },
-          { courier_code: 'anteraja', courier_name: 'AnterAja', courier_service_name: 'Same Day Food', price: 16000, estimated_etd: 'Hari yang sama (6-8 Jam)', badge_color: 'border-purple-500 text-purple-700 bg-purple-50', icon: 'fa-paper-plane', recommended: false },
+          { courier_code: 'anteraja', courier_name: 'AnterAja', courier_service_name: 'Same Day Delivery', price: 16000, estimated_etd: 'Hari yang sama (6-8 Jam)', badge_color: 'border-purple-500 text-purple-700 bg-purple-50', icon: 'fa-paper-plane', recommended: false },
           { courier_code: 'ninja', courier_name: 'Ninja Xpress', courier_service_name: 'Ninja Reguler', price: 11000, estimated_etd: '1 - 2 Hari', badge_color: 'border-rose-500 text-rose-700 bg-rose-50', icon: 'fa-mask', recommended: false },
           { courier_code: 'pos', courier_name: 'POS Indonesia', courier_service_name: 'Pos Next Day', price: 13500, estimated_etd: '1 Hari', badge_color: 'border-amber-500 text-amber-700 bg-amber-50', icon: 'fa-envelope-open-text', recommended: false }
         ],
@@ -8507,19 +8507,19 @@ git push -u origin main</pre>
         },
 
         // ═══════════════════════════════════════════════════════════════════
-        // ✅ FITUR BARU: Pesan Online Platform (ShopeeFood / GoFood / GrabFood)
+        // ✅ FITUR BARU: Pesan Online Platform (Shopee / Blibli / Tokopedia)
         // ═══════════════════════════════════════════════════════════════════
         refreshAvailablePlatforms() {
           const links = (this.siteConfig && this.siteConfig.deliveryLinks) || {};
           const list = [];
           if (links.shopeefood && String(links.shopeefood).trim()) {
-            list.push({ id: 'shopeefood', name: 'ShopeeFood', url: String(links.shopeefood).trim(), icon: 'fa-solid fa-bag-shopping', bgClass: 'bg-orange-500 hover:bg-orange-600' });
+            list.push({ id: 'shopeefood', name: 'Shopee', url: String(links.shopeefood).trim(), icon: 'fa-solid fa-bag-shopping', bgClass: 'bg-orange-500 hover:bg-orange-600' });
           }
           if (links.gofood && String(links.gofood).trim()) {
-            list.push({ id: 'gofood', name: 'GoFood', url: String(links.gofood).trim(), icon: 'fa-solid fa-motorcycle', bgClass: 'bg-red-600 hover:bg-red-700' });
+            list.push({ id: 'gofood', name: 'Blibli', url: String(links.gofood).trim(), icon: 'fa-solid fa-motorcycle', bgClass: 'bg-red-600 hover:bg-red-700' });
           }
           if (links.grabfood && String(links.grabfood).trim()) {
-            list.push({ id: 'grabfood', name: 'GrabFood', url: String(links.grabfood).trim(), icon: 'fa-solid fa-car-side', bgClass: 'bg-emerald-600 hover:bg-emerald-700' });
+            list.push({ id: 'grabfood', name: 'Tokopedia', url: String(links.grabfood).trim(), icon: 'fa-solid fa-car-side', bgClass: 'bg-emerald-600 hover:bg-emerald-700' });
           }
           this.availablePlatformsList = list;
         },

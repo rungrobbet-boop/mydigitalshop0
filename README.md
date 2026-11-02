@@ -42,6 +42,8 @@ VITE_FIREBASE_MESSAGING_SENDER_ID="1234567890"
 VITE_FIREBASE_APP_ID="1:1234:web:abcd"
 Jalankan Secara Lokal:
 
+<<<<<<< HEAD
+Untuk mempermudah konversi penjualan UMKM, pelanggan tidak boleh dipaksa mengisi formulir login password yang panjang saat hendak memesan barang.
 bash
 npm run dev
 ☁️ Deployment ke Cloudflare Pages

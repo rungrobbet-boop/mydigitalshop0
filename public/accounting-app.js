@@ -404,13 +404,8 @@ window.accountingApp = function() {
       try {
         await this.initFirebaseConfig();
         let fbUrl = (this._fbConfig?.databaseURL || '').replace(/\/$/, '');
-        if (!fbUrl && typeof window !== 'undefined' && window.location) {
-          const host = window.location.hostname || '';
-          if (host.includes('mydigitalshop')) {
-            fbUrl = 'https://mydigitalshop-app-default-rtdb.asia-southeast1.firebasedatabase.app';
-          } else if (host.includes('dapurkulinerviral')) {
-            fbUrl = 'https://dapurkulinerviral-default-rtdb.asia-southeast1.firebasedatabase.app';
-          }
+        if (!fbUrl) {
+          console.warn('[ACCT-APP] Tidak ada Firebase DB URL dari konfigurasi — PIN tidak dapat dimuat.');
         }
         if (fbUrl) {
           const res = await fetch(`${fbUrl}/site_config/supervisorPin.json`);
@@ -627,16 +622,10 @@ window.accountingApp = function() {
           await this.initFirebaseConfig();
         }
         let dbUrl = (this._fbConfig?.databaseURL || '').replace(/\/$/, '');
-        // Fallback: derive dari hostname kalau endpoint gagal
-        if (!dbUrl && typeof window !== 'undefined' && window.location) {
-          const host = window.location.hostname || '';
-          if (host.includes('mydigitalshop')) {
-            dbUrl = 'https://mydigitalshop-app-default-rtdb.asia-southeast1.firebasedatabase.app';
-          } else if (host.includes('dapurkulinerviral')) {
-            dbUrl = 'https://dapurkulinerviral-default-rtdb.asia-southeast1.firebasedatabase.app';
-          }
+        if (!dbUrl) {
+          console.warn('[ACCT-APP] Tidak ada Firebase DB URL dari konfigurasi — brand name tidak dapat dimuat.');
+          return;
         }
-        if (!dbUrl) return;
         const res = await fetch(`${dbUrl}/site_config/brandName.json`);
         if (res.ok) {
           const name = await res.json();
@@ -2073,14 +2062,6 @@ const _getAccNameById = (code) => {
 async function forceMigrateJournalAcc() {
   try {
     let fbUrl = (window.accountingApp && window.accountingApp._fbConfig?.databaseURL) || '';
-    if (!fbUrl && typeof window !== 'undefined' && window.location) {
-      const host = window.location.hostname || '';
-      if (host.includes('mydigitalshop')) {
-        fbUrl = 'https://mydigitalshop-app-default-rtdb.asia-southeast1.firebasedatabase.app';
-      } else if (host.includes('dapurkulinerviral')) {
-        fbUrl = 'https://dapurkulinerviral-default-rtdb.asia-southeast1.firebasedatabase.app';
-      }
-    }
     if (!fbUrl) {
       console.warn('[FORCE-MIGRATE] Tidak ada Firebase DB URL, dilewati.');
       return;

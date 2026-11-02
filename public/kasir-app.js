@@ -813,12 +813,9 @@ window.kasirApp = () => ({
   _fbOnValue: null,
   _audioCtx: null,
 
-  // ✅ Default Firebase config utama — digunakan sebagai base saat window.firebaseConfig
-  // dan localStorage kosong. Tidak ada hardcoded apiKey (diambil dari Vite Env via Landing Page),
-  // tapi databaseURL disediakan agar RTDB bisa terhubung secara otomatis.
-  _defaultFirebaseConfig: {
-    databaseURL: ''
-  },
+  // Konfigurasi Firebase diisi dari window.firebaseConfig (via /firebase-config.js ES module)
+  // atau localStorage 'dapur_firebase_custom_config' (via Panel Admin).
+  // Jika keduanya kosong, aplikasi berjalan tanpa koneksi Firebase.
 
   // =========================================================================
   // 2. INISIALISASI (init & initKasir)
@@ -1580,13 +1577,11 @@ try {
    */
     async initFirebaseSDK() {
      try {
-       // Ambil kredensial Firebase — gabungkan tiga lapis:
-       //   1. _defaultFirebaseConfig (databaseURL selalu tersedia)
-       //   2. window.firebaseConfig (dari kasir.html ES module import)
-       //   3. localStorage (dapur_firebase_custom_config — diisi via Panel Admin Kasir)
-       // Landing Page (index.html) menggunakan import.meta.env VITE_FIREBASE_*,
-       // JANGAN memuat firebase-config.js secara statis di sini.
-       let cfg = { ...this._defaultFirebaseConfig };
+       // Ambil kredensial Firebase dari dua sumber:
+       //   1. window.firebaseConfig (dari /firebase-config.js ES module, di-generate dari .env via Vite)
+       //   2. localStorage 'dapur_firebase_custom_config' (diisi via Panel Admin Kasir)
+       // Jika keduanya kosong, aplikasi berjalan tanpa koneksi Firebase (mode Demo/Offline).
+       let cfg = {};
 
        // 1. Lapisan window.firebaseConfig
        if (window.firebaseConfig && window.firebaseConfig.apiKey) {
@@ -1603,7 +1598,7 @@ try {
          console.warn('[FB-INIT] Gagal parse localStorage config:', e);
        }
        if (!cfg || !cfg.apiKey) {
-         console.warn('[FB-INIT] Firebase konfigurasi tidak ditemukan — masuk mode Demo/Offline (RTDB hanya databaseURL tanpa auth).');
+         console.warn('[FB-INIT] Firebase konfigurasi tidak ditemukan — aplikasi berjalan offline (tanpa koneksi database).');
          this.appReady = true;
          return;
        }
@@ -1812,14 +1807,14 @@ async loadMoreProducts() {
         this.menuList = Array.from(seen.values());
         console.log(`[FB-FS] Loaded ${this.menuList.length} unique products`);
       } else {
-        this.menuList = []; // Tidak ada fallback makanan — kosongkan jika Firestore kosong
+        this.menuList = []; // Tidak ada fallback data — kosongkan jika Firestore kosong
       }
       this.syncCategoriesWithMainStore();
       this.isLoadingMenu = false;
     } catch (e) {
       clearTimeout(menuTimeout);
       console.warn('Menu listener setup exception:', e);
-      this.menuList = []; // Tidak ada fallback makanan
+      this.menuList = []; // Tidak ada fallback data
       this.isLoadingMenu = false;
     }
 

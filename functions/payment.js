@@ -86,7 +86,7 @@ export async function onRequest(context) {
       },
       customer_details: {
         first_name: customer_details.name || "Pelanggan",
-        email: customer_details.email || "customer@dapurkuliner.id",
+        email: customer_details.email || "customer@bisniskami.id",
         phone: customer_details.phone || "08123456789"
       },
       item_details: item_details.length > 0 ? item_details.map(item => ({

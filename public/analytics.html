@@ -137,7 +137,7 @@
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> Live Real-time
             </span>
           </h1>
-          <p class="text-xs text-stone-500">Monitoring omset, efisiensi operasional dapur, & audit transaksi</p>
+          <p class="text-xs text-stone-500">Monitoring omset, efisiensi operasional gudang, & audit transaksi</p>
         </div>
       </div>
 
@@ -495,9 +495,16 @@
   </main>
 
   <!-- MAIN SCRIPT: Alpine data function -->
+  <script type="module">
+    import { firebaseConfig } from '/firebase-config.js';
+    window.FB_URL = (firebaseConfig && firebaseConfig.databaseURL) || '';
+    if (!window.FB_URL) {
+      console.warn('[ANALYTICS] Firebase belum dikonfigurasi — fitur data akan dinonaktifkan.');
+    }
+  </script>
   <script>
     // Helper functions — didefinisikan DI LUAR return object
-    var FB_URL = 'https://mydigitalshop-app-default-rtdb.asia-southeast1.firebasedatabase.app';
+    // FB_URL tersedia sebagai window.FB_URL (di-set oleh module script di atas)
 
     function getLocalDateStr(d) {
       d = d || new Date();

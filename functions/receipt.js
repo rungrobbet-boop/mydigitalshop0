@@ -45,10 +45,10 @@ const DEFAULT_COMPANY_SETTINGS = {
   tagline: "Spesialis Masakan Nusantara & Catering",
   address: "Jl. Boulevard Raya Blok A No. 12, Kelapa Gading, Jakarta Utara",
   phone: "0812-8888-9999",
-  instagram: "@dapurkulinerviral.id",
+  instagram: "@bisniskami.id",
   npwp: "98.765.432.1-012.000",
   footerMessage: "Terima kasih atas kunjungan Anda!",
-  feedbackUrl: "https://dapurkulinerviral.id/feedback"
+  feedbackUrl: "https://bisniskami.id/feedback",
 };
 
 // ============================================================================

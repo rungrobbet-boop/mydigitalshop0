@@ -737,7 +737,7 @@
               </div>
             </div>
             <div class="text-xl font-extrabold text-stone-900 font-mono tracking-tight" x-text="formatRupiah(summaryMetrics.kasDiBank)"></div>
-            <p class="text-[11px] text-stone-500 mt-1">Saldo rekening BCA Operasional</p>
+            <p class="text-[11px] text-stone-500 mt-1">Saldo rekening Bank Operasional</p>
           </div>
 
           <!-- Card 7: Piutang Pelanggan -->
@@ -749,7 +749,7 @@
               </div>
             </div>
             <div class="text-xl font-extrabold text-stone-900 font-mono tracking-tight" x-text="formatRupiah(summaryMetrics.piutang)"></div>
-            <p class="text-[11px] text-stone-500 mt-1">Pesanan catering & invoice belum lunas</p>
+            <p class="text-[11px] text-stone-500 mt-1">Pesanan Supply Proyek & invoice belum lunas</p>
           </div>
 
           <!-- Card 8: Hutang Supplier -->
@@ -761,7 +761,7 @@
               </div>
             </div>
             <div class="text-xl font-extrabold text-stone-900 font-mono tracking-tight" x-text="formatRupiah(summaryMetrics.hutangSupplier)"></div>
-            <p class="text-[11px] text-stone-500 mt-1">Tempo bahan baku ayam & bumbu</p>
+            <p class="text-[11px] text-stone-500 mt-1">Tempo barang & imventaris</p>
           </div>
 
         </div>
@@ -1479,7 +1479,7 @@
                     <span class="font-mono font-bold text-emerald-700" x-text="formatRupiah(laporanData.pl.pendapatanPOS)"></span>
                   </div>
                   <div class="flex justify-between py-1 border-b border-stone-100">
-                    <span>Pendapatan Pesanan Catering & Event</span>
+                    <span>Pendapatan Proyek & B2B</span>
                     <span class="font-mono font-bold text-emerald-700" x-text="formatRupiah(laporanData.pl.pendapatanCatering)"></span>
                   </div>
                   <div class="flex justify-between py-2 text-stone-900 font-extrabold">
@@ -1496,7 +1496,7 @@
                 </div>
                 <div class="pl-4 pr-2 space-y-1.5">
                   <div class="flex justify-between py-1 border-b border-stone-100">
-                    <span>Biaya Bahan Baku & Daging Segar</span>
+                    <span>Biaya Pembelian Barang/Item</span>
                     <span class="font-mono font-bold text-rose-700" x-text="formatRupiah(laporanData.pl.hpp)"></span>
                   </div>
                   <div class="flex justify-between py-2 text-brand-800 font-black text-base border-y-2 border-stone-200">
@@ -1521,7 +1521,7 @@
                     <span class="font-mono text-rose-700" x-text="formatRupiah(laporanData.pl.bebanSewa)"></span>
                   </div>
                   <div class="flex justify-between py-1 border-b border-stone-100">
-                    <span>Listrik, Air & Tabung Gas</span>
+                    <span>Listrik, Air dan lainnya</span>
                     <span class="font-mono text-rose-700" x-text="formatRupiah(laporanData.pl.bebanListrik)"></span>
                   </div>
                   <div class="flex justify-between py-1 border-b border-stone-100">
@@ -1586,7 +1586,7 @@
                 </div>
                 <div class="pl-4 pr-2 space-y-1.5">
                   <div class="flex justify-between py-1 border-b border-stone-100">
-                    <span>Pembelian Peralatan Mesin Penggorengan & Kasir</span>
+                    <span>Pembelian Peralatan & Inventaris</span>
                     <span class="font-mono text-rose-700" x-text="'(' + formatRupiah(laporanData.cashFlow.pembelianPeralatan) + ')'"></span>
                   </div>
                   <div class="flex justify-between py-2 text-stone-900 font-extrabold">
@@ -1654,7 +1654,7 @@
                       <span class="font-mono font-bold" x-text="formatRupiah(laporanData.balanceSheet.kas)"></span>
                     </div>
                     <div class="flex justify-between py-1 border-b border-stone-100">
-                      <span>Kas di Bank (BCA)</span>
+                      <span>Kas di Bank</span>
                       <span class="font-mono font-bold" x-text="formatRupiah(laporanData.balanceSheet.bank)"></span>
                     </div>
                     <div class="flex justify-between py-1 border-b border-stone-100">
@@ -1662,7 +1662,7 @@
                       <span class="font-mono font-bold" x-text="formatRupiah(laporanData.balanceSheet.piutang)"></span>
                     </div>
                     <div class="flex justify-between py-1 border-b border-stone-100">
-                      <span>Persediaan Bahan Baku</span>
+                      <span>Persediaan</span>
                       <span class="font-mono font-bold" x-text="formatRupiah(laporanData.balanceSheet.persediaan)"></span>
                     </div>
                     <div class="flex justify-between py-1.5 font-bold text-stone-900">
@@ -1675,7 +1675,7 @@
                   <div class="pl-2 space-y-1.5 pt-2">
                     <span class="text-xs font-bold text-stone-500 uppercase">Aset Tetap:</span>
                     <div class="flex justify-between py-1 border-b border-stone-100">
-                      <span>Peralatan & Mesin Dapur</span>
+                      <span>Peralatan & Inventaris</span>
                       <span class="font-mono font-bold" x-text="formatRupiah(laporanData.balanceSheet.peralatan)"></span>
                     </div>
                   </div>
@@ -1783,11 +1783,11 @@
           <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
             <button 
               type="button" 
-              @click="manualJournalForm.desc = 'Beban Listrik, Air & Gas Outlet'; manualJournalForm.debitAccount = '6003'; manualJournalForm.creditAccount = '1001';"
+              @click="manualJournalForm.desc = 'Beban Listrik, Air dan lainnya Outlet'; manualJournalForm.debitAccount = '6003'; manualJournalForm.creditAccount = '1001';"
               class="p-3 rounded-2xl border border-stone-200 bg-stone-50 hover:bg-brand-50 hover:border-brand-300 text-left transition cursor-pointer">
               <i class="fa-solid fa-bolt text-brand-600 text-sm mb-1"></i>
               <div class="text-xs font-bold text-stone-900">Operasional</div>
-              <div class="text-[10px] text-stone-500">Listrik/Air/Gas</div>
+              <div class="text-[10px] text-stone-500">Listrik/Air dan lainnya</div>
             </button>
 
             <button 

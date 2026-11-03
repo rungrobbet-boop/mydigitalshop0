@@ -483,7 +483,7 @@
         :class="activeTab === 'inventory' && inventoryTab !== 'pembelian' ? 'bg-emerald-600 text-white font-bold' : 'text-stone-700 hover:bg-stone-100'"
         class="w-full min-h-[48px] px-3.5 rounded-xl flex items-center gap-3 text-sm transition text-left cursor-pointer">
         <i class="fa-solid fa-boxes-stacked w-5 text-center"></i>
-        <span>Inventory &amp; Resep</span>
+        <span>Inventory</span>
       </button>
 
       <button 
@@ -492,7 +492,7 @@
         :class="activeTab === 'inventory' && inventoryTab === 'pembelian' ? 'bg-emerald-600 text-white font-bold' : 'text-stone-700 hover:bg-stone-100'"
         class="w-full min-h-[48px] px-3.5 rounded-xl flex items-center gap-3 text-sm transition text-left cursor-pointer">
         <i class="fa-solid fa-truck-ramp-box w-5 text-center"></i>
-        <span>Pembelian Bahan</span>
+        <span>Pembelian</span>
       </button>
 
       <button 
@@ -642,7 +642,7 @@
           <div class="w-8 h-8 rounded-xl flex items-center justify-center transition-colors" :class="activeTab === 'inventory' && inventoryTab !== 'pembelian' ? 'bg-emerald-700 text-white' : 'bg-stone-100 text-stone-500 group-hover:bg-stone-200'">
             <i class="fa-solid fa-boxes-stacked text-sm"></i>
           </div>
-          <span class="truncate">Inventory &amp; Resep</span>
+          <span class="truncate">Inventory</span>
         </button>
 
         <!-- Menu: Pembelian Bahan Baku -->
@@ -654,7 +654,7 @@
           <div class="w-8 h-8 rounded-xl flex items-center justify-center transition-colors" :class="activeTab === 'inventory' && inventoryTab === 'pembelian' ? 'bg-emerald-700 text-white' : 'bg-stone-100 text-stone-500 group-hover:bg-stone-200'">
             <i class="fa-solid fa-truck-ramp-box text-sm"></i>
           </div>
-          <span class="truncate">Pembelian Bahan</span>
+          <span class="truncate">Pembelian</span>
         </button>
 
         <!-- Menu: Laporan -->
@@ -1168,7 +1168,7 @@
                   <input :disabled="isReadOnlyMode" 
                     type="text" 
                     x-model="orderNote"
-                    placeholder="Contoh: Meja 4 / Bungkus / Tanpa Sambal" 
+                    placeholder="" 
                     class="w-full h-10 px-3 rounded-xl border border-stone-300 bg-stone-50 focus:bg-white text-xs font-medium focus:ring-1 focus:ring-emerald-500 focus:outline-none" 
                   />
                 </div>
@@ -1959,13 +1959,13 @@
       <!-- ═══════════════════════════════════════════════════════════════════ -->
       <section x-show="activeTab === 'inventory'" x-cloak class="space-y-6">
         
-        <!-- Header Inventory: Search + Tombol Aksi Produk & Bahan Baku -->
+        <!-- Header Inventory: Search + Tombol Aksi Produk & Barang -->
         <div class="bg-white rounded-3xl p-4 sm:p-6 border border-stone-200 shadow-xs flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
           <div class="relative w-full sm:w-80">
             <input :disabled="isReadOnlyMode" 
               type="text" 
               x-model="inventorySearch"
-              placeholder="Cari bahan bangunan, produk siap jual..." 
+              placeholder="Cari barang, produk siap jual..." 
               class="w-full min-h-[48px] pl-11 pr-4 rounded-xl border border-stone-300 bg-stone-50 text-sm focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500" 
             />
             <div class="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400">
@@ -1982,7 +1982,7 @@
                 :class="(inventoryTab || 'ingredients') === 'ingredients' ? 'bg-white text-stone-900 font-black shadow-xs' : 'text-stone-500 font-semibold'"
                 class="px-3 py-2 rounded-lg text-xs transition cursor-pointer flex items-center gap-1.5 whitespace-nowrap">
                 <i class="fa-solid fa-layer-group text-[10px]"></i>
-                <span>Bahan Baku / Item</span>
+                <span>Barang / Item</span>
               </button>
               <button 
                 type="button" 
@@ -1990,7 +1990,7 @@
                 :class="inventoryTab === 'products' ? 'bg-white text-stone-900 font-black shadow-xs' : 'text-stone-500 font-semibold'"
                 class="px-3 py-2 rounded-lg text-xs transition cursor-pointer flex items-center gap-1.5 whitespace-nowrap">
                 <i class="fa-solid fa-box text-[10px]"></i>
-                <span>Produk Menu &amp; Resep</span>
+                <span>Produk</span>
               </button>
               <button 
                 type="button" 
@@ -1998,7 +1998,7 @@
                 :class="inventoryTab === 'pembelian' ? 'bg-white text-stone-900 font-black shadow-xs' : 'text-stone-500 font-semibold'"
                 class="px-3 py-2 rounded-lg text-xs transition cursor-pointer flex items-center gap-1.5 whitespace-nowrap">
                 <i class="fa-solid fa-truck-ramp-box text-[10px] text-emerald-600"></i>
-                <span>Pembelian Bahan</span>
+                <span>Pembelian</span>
               </button>
               <button 
                 type="button" 
@@ -2084,7 +2084,7 @@
                 @click="openAddInventoryModal()"
                 class="min-h-[48px] px-4 rounded-xl bg-stone-800 hover:bg-stone-900 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition cursor-pointer shadow-xs">
                 <i class="fa-solid fa-boxes-stacked text-xs"></i>
-                <span>+ Bahan Baku</span>
+                <span>+ Stok Item</span>
             </button>
 
             <!-- Tombol Aksi R&D Konsinyasi (Fitur 2D, 2E, 3A) -->
@@ -2327,7 +2327,7 @@
                       class="min-h-[44px] px-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200 font-bold text-xs flex items-center justify-center gap-1 transition cursor-pointer"
                       title="Edit resep & pengaturan menu terhubung">
                       <i class="fa-solid fa-pen text-[11px] text-emerald-600"></i>
-                      <span>✏️ Edit Menu</span>
+                      <span>✏️ Edit Produk</span>
                     </button>
                   </template>
 
@@ -3498,7 +3498,7 @@
                 <div class="text-center pb-4 border-b border-stone-200">
                   <img x-bind:src="siteInfo.logoUrl || '/default-logo.png'" alt="Logo Toko" class="w-10 h-10 mx-auto mb-2 opacity-80" x-show="siteInfo.logoUrl">
                   <h4 class="font-extrabold text-stone-900 text-lg uppercase tracking-tight" x-text="(siteInfo && siteInfo.brandName ? siteInfo.brandName : (customKasirSubtitle || 'MyDigitalShop')).toUpperCase()">MYDIGITALSHOP</h4>
-                <h5 class="font-black text-emerald-800 text-base">LAPORAN LABA RUGI OPERASIONAL</h5>
+                <h5 class="font-black text-emerald-800 text-base">LAPORAN LABA RUGI KOMPREHENSIF</h5>
                 <p class="text-xs text-stone-500 font-mono mt-0.5">Untuk Periode Berakhir Hari Ini</p>
               </div>
 
@@ -3509,10 +3509,14 @@
                   <span>IDR</span>
                 </div>
                 <div class="flex justify-between text-xs px-3">
-                  <span class="text-stone-600">Pendapatan Penjualan Produk Bangunan POS</span>
-                  <span class="font-mono font-bold text-stone-900" x-text="formatRupiah(getAccountingSummary().totalRev)"></span>
-                </div>
-                <div class="flex justify-between text-xs font-black px-3 pt-1 border-t border-stone-200 text-emerald-900">
+                  <span class="text-stone-600">Pendapatan Kasir POS</span>
+                                    <span class="font-mono font-bold text-stone-900" x-text="formatRupiah(getAccountingSummary().totalRev)"></span>
+                                  </div>
+                                  <div class="flex justify-between text-xs px-3">
+                                    <span class="text-stone-600">Pendapatan Proyek & B2B</span>
+                                    <span class="font-mono font-bold text-stone-900" x-text="formatRupiah(getAccountingSummary().pendapatanCatering || 0)"></span>
+                                  </div>
+                                  <div class="flex justify-between text-xs font-black px-3 pt-1 border-t border-stone-200 text-emerald-900">
                   <span>TOTAL PENDAPATAN</span>
                   <span class="font-mono" x-text="formatRupiah(getAccountingSummary().totalRev)"></span>
                 </div>
@@ -3525,7 +3529,7 @@
                   <span>IDR</span>
                 </div>
                 <div class="flex justify-between text-xs px-3">
-                  <span class="text-stone-600">Pemakaian Persediaan Bahan Baku Utama (BOM)</span>
+                  <span class="text-stone-600">Biaya Pembelian Barang/Item</span>
                   <span class="font-mono font-bold text-amber-900" x-text="formatRupiah(getAccountingSummary().totalCOGS)"></span>
                 </div>
                 <div class="flex justify-between text-xs font-black px-3 pt-1 border-t border-stone-200 text-amber-950">
@@ -3539,7 +3543,7 @@
               <!-- BEBAN OPERASIONAL -->
               <div class="space-y-2 pt-2">
                 <div class="flex items-center justify-between font-extrabold text-xs uppercase text-stone-700 bg-stone-200/60 p-2 rounded-lg">
-                  <span>3. BEBAN OPERASIONAL GUDANG</span>
+                  <span>3. BEBAN OPERASIONAL</span>
                   <span>IDR</span>
                 </div>
                 <template x-for="opex in getAccountingSummary().opExList" :key="opex.name">
@@ -3570,7 +3574,7 @@
                 </div>
                 <div class="flex justify-between text-xs px-3">
                   <div>
-                    <span class="text-stone-700 font-semibold">Pembelian Bahan Baku (periode ini)</span>
+                    <span class="text-stone-700 font-semibold">Pembelian Barang/Item (periode ini)</span>
                     <span class="text-[10px] text-stone-400 block italic">
                       Bahan yang dibeli, masuk ke Persediaan (akun 105)
                     </span>
@@ -3582,14 +3586,14 @@
                   <div>
                     <span class="text-stone-700 font-semibold">Saldo Persediaan Akhir</span>
                     <span class="text-[10px] text-stone-400 block italic">
-                      Nilai bahan baku yang masih ada di gudang
+                      Nilai barang yang masih di gudang
                     </span>
                   </div>
                   <span class="font-mono font-bold text-stone-900 text-sm"
                         x-text="formatRupiah(getAccountingSummary().persediaanAkhir || 0)"></span>
                 </div>
                 <div class="text-[10px] text-stone-400 italic px-3 pt-2 leading-relaxed">
-                  💡 HPP di atas terisi otomatis saat bahan baku <strong>terjual</strong> (dari transaksi kasir). Pembelian bahan yang masih di gudang belum masuk HPP.
+                  💡 HPP di atas terisi otomatis saat barang <strong>terjual</strong> (dari transaksi kasir). Pembelian barang yang masih di gudang belum masuk HPP.
                 </div>
               </div>
             </div>

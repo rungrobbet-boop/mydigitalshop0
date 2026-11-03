@@ -265,32 +265,49 @@
       const logoImage = config && config.logoImage ? config.logoImage : null;
       const bgColor = config && config.logoBgColor ? config.logoBgColor : '#ea580c';
 
-      // Coba pakai logo gambar jika ada
+      const drawInitials = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = 128; canvas.height = 128;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(0, 0, 128, 128);
+        const initials = brandName.split(' ').map(w => w.charAt(0)).join('').substring(0, 2).toUpperCase();
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 64px sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText(initials, 64, 64);
+        favicon.href = canvas.toDataURL('image/png');
+      };
+
       if (logoImage && String(logoImage).trim().length > 5) {
-        favicon.href = logoImage;
+        const img = new Image();
+        img.crossOrigin = 'Anonymous';
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = 128; canvas.height = 128;
+          const ctx = canvas.getContext('2d');
+
+          // Background kotak logo
+          ctx.fillStyle = config.logoBgColor || '#ffffff';
+          ctx.fillRect(0, 0, 128, 128);
+
+          // Skala gambar agar penuh (maksimal 90% dari canvas)
+          const hRatio = 128 / img.width;
+          const vRatio = 128 / img.height;
+          const ratio = Math.min(hRatio, vRatio) * 0.9; // 0.9 = 90% dari ukuran maksimal
+          const newWidth = img.width * ratio;
+          const newHeight = img.height * ratio;
+          const x = (128 - newWidth) / 2;
+          const y = (128 - newHeight) / 2;
+
+          ctx.drawImage(img, x, y, newWidth, newHeight);
+          favicon.href = canvas.toDataURL('image/png');
+        };
+        img.onerror = drawInitials;
+        img.src = logoImage;
         return;
       }
-
-      // FALLBACK: Jika tidak ada logo, buat inisial menggunakan Canvas
-      const canvas = document.createElement('canvas');
-      canvas.width = 64;
-      canvas.height = 64;
-      const ctx = canvas.getContext('2d');
-
-      // Background
-      ctx.fillStyle = bgColor;
-      ctx.fillRect(0, 0, 64, 64);
-
-      // Teks Inisial (Ambil max 2 huruf pertama)
-      const initials = String(brandName).split(' ').map(w => w.charAt(0)).join('').substring(0, 2).toUpperCase();
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 32px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(initials, 32, 32);
-
-      // Terapkan ke Favicon
-      favicon.href = canvas.toDataURL('image/png');
+      drawInitials();
     }
   </script>
 </head>
@@ -3085,9 +3102,9 @@
           <div class="p-4 rounded-2xl border border-stone-200 bg-stone-100 space-y-2">
             <span class="text-[11px] font-bold text-stone-500 uppercase tracking-wider">Live Preview Tampilan Brand di Header:</span>
             <div class="p-3 bg-white rounded-xl shadow-sm border border-stone-200 flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-md overflow-hidden flex-shrink-0" :style="{ backgroundColor: siteConfig.logoBgColor || '#ea580c' }">
+              <div class="w-16 h-16 rounded-xl flex items-center justify-center text-white shadow-md overflow-hidden flex-shrink-0" :style="{ backgroundColor: siteConfig.logoBgColor || '#ea580c' }">
                 <template x-if="siteConfig.logoType === 'image' && siteConfig.logoImage">
-                  <img :src="siteConfig.logoImage" alt="Preview Logo" class="w-full h-full object-cover" />
+                  <img :src="siteConfig.logoImage" alt="Preview Logo" class="w-full h-full object-contain p-1" />
                 </template>
                 <template x-if="siteConfig.logoType !== 'image' || !siteConfig.logoImage">
                   <i :class="siteConfig.logoIcon || 'fa-solid fa-box'" class="text-lg"></i>

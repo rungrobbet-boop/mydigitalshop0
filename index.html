@@ -260,19 +260,26 @@
     function updateDynamicFavicon(config) {
       const favicon = document.getElementById('dynamic-favicon');
       if (!favicon) return;
-
-      const brandName = config && config.brandName ? config.brandName : 'MyDigitalShop';
-      const logoImage = config && config.logoImage ? config.logoImage : null;
-      const bgColor = config && config.logoBgColor ? config.logoBgColor : '#ea580c';
+      
+      const brandName = config.brandName || 'MyDigitalShop';
+      const logoImage = config.logoImage;
+      const bgColor = config.logoBgColor || '#ffffff';
 
       const drawInitials = () => {
         const canvas = document.createElement('canvas');
         canvas.width = 128; canvas.height = 128;
         const ctx = canvas.getContext('2d');
+        
+        // 1. Gambar Background (agar warna dari Admin terlihat jika logo transparan)
         ctx.fillStyle = bgColor;
         ctx.fillRect(0, 0, 128, 128);
+        
         const initials = brandName.split(' ').map(w => w.charAt(0)).join('').substring(0, 2).toUpperCase();
-        ctx.fillStyle = '#ffffff';
+        
+        // 2. Cek kontras warna teks inisial
+        const isLightBg = (bgColor.toLowerCase() === '#ffffff' || bgColor.toLowerCase() === '#fff');
+        ctx.fillStyle = isLightBg ? '#1c1917' : '#ffffff'; 
+        
         ctx.font = 'bold 64px sans-serif';
         ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText(initials, 64, 64);
@@ -286,15 +293,15 @@
           const canvas = document.createElement('canvas');
           canvas.width = 128; canvas.height = 128;
           const ctx = canvas.getContext('2d');
-
-          // Background kotak logo
-          ctx.fillStyle = config.logoBgColor || '#ffffff';
+          
+          // 1. Gambar Background terlebih dahulu
+          ctx.fillStyle = bgColor;
           ctx.fillRect(0, 0, 128, 128);
 
-          // Skala gambar agar penuh (maksimal 90% dari canvas)
+          // 2. Gambar Logo dengan skala maksimal (Math.max)
           const hRatio = 128 / img.width;
           const vRatio = 128 / img.height;
-          const ratio = Math.min(hRatio, vRatio) * 0.9; // 0.9 = 90% dari ukuran maksimal
+          const ratio = Math.max(hRatio, vRatio); 
           const newWidth = img.width * ratio;
           const newHeight = img.height * ratio;
           const x = (128 - newWidth) / 2;
@@ -3102,7 +3109,7 @@
           <div class="p-4 rounded-2xl border border-stone-200 bg-stone-100 space-y-2">
             <span class="text-[11px] font-bold text-stone-500 uppercase tracking-wider">Live Preview Tampilan Brand di Header:</span>
             <div class="p-3 bg-white rounded-xl shadow-sm border border-stone-200 flex items-center gap-3">
-              <div class="w-16 h-16 rounded-xl flex items-center justify-center text-white shadow-md overflow-hidden flex-shrink-0" :style="{ backgroundColor: siteConfig.logoBgColor || '#ea580c' }">
+              <div class="w-20 h-20 rounded-xl flex items-center justify-center text-white shadow-md overflow-hidden flex-shrink-0" :style="{ backgroundColor: siteConfig.logoBgColor || '#ea580c' }">
                 <template x-if="siteConfig.logoType === 'image' && siteConfig.logoImage">
                   <img :src="siteConfig.logoImage" alt="Preview Logo" class="w-full h-full object-contain p-1" />
                 </template>

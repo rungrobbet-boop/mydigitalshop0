@@ -11069,33 +11069,40 @@ async loadMoreProducts() {
     }
   },
  
-   async loadJournalListForKasir() {
-    try {
-      this.accountingJournalLoading = true;
-      const bulan = new Date().toISOString().slice(0, 7); // YYYY-MM
+   async loadJournalListForKasir(bulanParam) {
+     try {
+       this.accountingJournalLoading = true;
+       let targetBulan = bulanParam;
 
-      const res = await fetch(`/accounting/journal/${bulan}`);
-      if (!res.ok) {
-        this.accountingJournalList = [];
-        return;
-      }
-      const json = await res.json();
-      if (json && json.success && Array.isArray(json.data)) {
-        this.accountingJournalList = json.data;
-        // Reset filter tanggal saat memuat data baru, agar tidak secara tidak sengaja menyembunyikan data
-        this.journalFilterDate = '';
-        console.log(`[KASIR-JOURNAL] Loaded ${json.data.length} entries for ${bulan}`);
-        console.log('CEK JURNAL KASIR:', json.data.slice(0, 3));
-      } else {
-        this.accountingJournalList = [];
-      }
-    } catch (e) {
-      console.warn('[KASIR-JOURNAL] Error:', e);
-      this.accountingJournalList = [];
-    } finally {
-      this.accountingJournalLoading = false;
-    }
-  },
+       // Jika tidak ada parameter, coba deteksi dari filter tanggal
+       if (!targetBulan && this.journalFilterDate) {
+         targetBulan = this.journalFilterDate.slice(0, 7); // Ambil YYYY-MM
+       }
+
+       // Jika masih kosong, pakai bulan berjalan
+       if (!targetBulan) {
+         targetBulan = new Date().toISOString().slice(0, 7);
+       }
+
+       const res = await fetch(`/accounting/journal/${targetBulan}`);
+       if (!res.ok) {
+         this.accountingJournalList = [];
+         return;
+       }
+       const json = await res.json();
+       if (json && json.success && Array.isArray(json.data)) {
+         this.accountingJournalList = json.data;
+         console.log(`[KASIR-JOURNAL] Loaded ${json.data.length} entries for ${targetBulan}`);
+       } else {
+         this.accountingJournalList = [];
+       }
+     } catch (e) {
+       console.warn('[KASIR-JOURNAL] Error:', e);
+       this.accountingJournalList = [];
+     } finally {
+       this.accountingJournalLoading = false;
+     }
+   },
 
  async loadCOAListFromBackend() {
     try {
@@ -11172,34 +11179,46 @@ async loadMoreProducts() {
         return map4to3[c] || c;
       };
 
-      try {
-        const ledgerRes = await fetch(`${fbUrl.replace(/\/$/, '')}/accounting/ledger.json`);
+            try {
+        // ✅ FIX: Ambil saldo ledger via Backend API (bukan Firebase langsung)
+        // Backend API /accounting/ledger sudah mendukung Auto Carry Forward dari bulan lalu.
+        const ledgerRes = await fetch(`/accounting/ledger?bulan=${bulan}`);
         if (ledgerRes.ok) {
-          const ledgerData = await ledgerRes.json();
-          console.log('[KASIR-COA] Ledger raw:', ledgerData);
+          const ledgerJson = await ledgerRes.json();
+          console.log('[KASIR-COA] Ledger API raw:', ledgerJson);
 
-          if (ledgerData && typeof ledgerData === 'object') {
-            // ledgerData = { "1001": { "2026-09": {closing,...} }, "1002": {...}, ... }
-            Object.entries(ledgerData).forEach(([accCode, months]) => {
-              if (!months || typeof months !== 'object') return;
-              const monthData = months[bulan];
-              if (monthData && typeof monthData === 'object') {
-                const closing = Number(monthData.closing);
-                const d = Number(monthData.debit) || 0;
-                const c = Number(monthData.credit) || 0;
-                // Prioritas: closing, fallback: debit - credit
-                const canonAcc = to3Digit(accCode); // ✅ KONVERSI 4-digit → 3-digit
-                saldoMap[canonAcc] = isNaN(closing) ? (d - c) : closing;
-              }
+          if (ledgerJson && ledgerJson.success && ledgerJson.data) {
+            const ledgerData = ledgerJson.data;
+            // ledgerData format: { "101": { opening, debit, credit, closing }, ... }
+            Object.entries(ledgerData).forEach(([accCode, monthData]) => {
+              if (!monthData || typeof monthData !== 'object') return;
+              
+              const closing = Number(monthData.closing);
+              const d = Number(monthData.debit) || 0;
+              const c = Number(monthData.credit) || 0;
+              // Prioritas: closing, fallback: debit - credit
+              const canonAcc = to3Digit(accCode);
+              saldoMap[canonAcc] = isNaN(closing) ? (d - c) : closing;
             });
           }
-          console.log(`[KASIR-COA] ✅ Ledger: ${Object.keys(saldoMap).length} accounts`);
+          console.log(`[KASIR-COA] ✅ Ledger API: ${Object.keys(saldoMap).length} accounts`);
           console.log('[KASIR-COA] Ledger saldo:', saldoMap);
         } else {
-          console.warn('[KASIR-COA] Ledger fetch failed:', ledgerRes.status);
+          console.warn('[KASIR-COA] Ledger API fetch failed:', ledgerRes.status);
         }
       } catch (e) {
-        console.warn('[KASIR-COA] Firebase ledger error:', e.message);
+        console.warn('[KASIR-COA] Ledger API error:', e.message);
+      }
+
+      // ✅ TAMBAHAN: Sinkronkan paksa dari Summary jika Ledger kosong/tidak lengkap
+      if (this.accountingSummaryData) {
+        const s = this.accountingSummaryData;
+        if (s.saldoKas !== undefined) saldoMap['101'] = Number(s.saldoKas);
+        if (s.saldoBank !== undefined) saldoMap['102'] = Number(s.saldoBank);
+        if (s.piutang !== undefined) saldoMap['103'] = Number(s.piutang);
+        if (s.persediaanAkhir !== undefined) saldoMap['105'] = Number(s.persediaanAkhir);
+        if (s.hutangSupplier !== undefined) saldoMap['201'] = Number(s.hutangSupplier);
+        console.log('[KASIR-COA] ✅ Fallback dari Summary diterapkan');
       }
 
       // ============================================================

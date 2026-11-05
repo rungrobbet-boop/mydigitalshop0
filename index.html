@@ -7391,37 +7391,9 @@ git push -u origin main</pre>
         // REALTIME LISTENER PRODUK (onSnapshot) — data selalu segar dari Firebase
         // =========================================================================
         attachProductsListener() {
-          if (this._productsListenerAttached) return;
-          this._productsListenerAttached = true;
-
-          const snapshotFn = window.FirestoreService && window.FirestoreService.onAdminProductsSnapshot;
-          if (typeof snapshotFn !== 'function') {
-            // Landing Page menggunakan fetch biasa (loadFirestoreProducts),
-            // real-time listener admin tidak diperlukan di sini.
-            return;
-          }
-
-          // Muat SEMUA produk (tanpa filter kategori di query) agar badge & filter akurat.
-          // Pemotongan (slice) DIHAPUS — semua data yang masuk disimpan utuh.
-          this._productsUnsubscribe = snapshotFn((products, snapshot) => {
-            console.log("Jumlah produk dari Firebase:", snapshot.size);
-            if (!Array.isArray(products)) return;
-
-            // Simpan utuh ke state — TANPA dipotong / slice
-            this.menuItems = products;
-            console.log("[LP DEBUG] Produk diterima dari Firebase (onSnapshot):", products.length, "items");
-            this.menuItems.forEach(p => {
-              if (p.imageUrl && !p.image) p.image = p.imageUrl;
-              if (p.image && !p.imageUrl) p.imageUrl = p.image;
-            });
-            this.syncCategoriesWithKasir();
-
-            this.firestoreLastDoc = null;
-            this.firestoreHasMore = products.length >= 50;
-            console.log('[Firestore] Produk real-time termuat:', this.menuItems.length, 'hasMore:', this.firestoreHasMore);
-          }, { limitCount: 50, categoryId: null });
-
-          console.log('[Firestore] Realtime listener produk aktif (onSnapshot).');
+          // onSnapshot DINONAKTIFKAN untuk hemat kuota reads Firestore.
+          // Katalog pakai loadFirestoreProducts() (cursor-based pagination, one-time fetch).
+          return;
         },
 
         async loadMoreProducts() {

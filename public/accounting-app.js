@@ -1607,22 +1607,10 @@ window.accountingApp = function() {
           }
         }
 
-        // Fallback: fetch langsung Firebase REST
+        // Fallback Firebase REST (ledger.json) DINONAKTIFKAN — jangan unduh seluruh ledger
+        // untuk hemat kuota bandwidth. Biarkan data kosong jika API gagal.
         if (!data) {
-          const fbUrl = (this._fbConfig?.databaseURL || '').replace(/\/$/, '');
-          const rawRes = await fetch(`${fbUrl}/accounting/ledger.json`);
-          if (rawRes.ok) {
-            const all = await rawRes.json();
-            const monthMap = {};
-            if (all && typeof all === 'object') {
-              for (const [code, months] of Object.entries(all)) {
-                if (months && months[targetBulan]) {
-                  monthMap[code] = months[targetBulan];
-                }
-              }
-            }
-            data = monthMap;
-          }
+          data = {};
         }
 
         this._ledgerMapByMonth[targetBulan] = data || {};
@@ -2006,30 +1994,6 @@ window.accountingApp = function() {
         // Jika tidak ada data, list kosong (TIDAK ADA DATA DUMMY)
         this.jurnalList = Array.isArray(list) ? list : [];
 
-        // ========================================================================
-        // REALTIME LISTENER: onValue untuk /accounting/journal/${bulan}
-        // ========================================================================
-        if (typeof window.rtdb !== 'undefined' && typeof window.ref !== 'undefined' && typeof window.onValue !== 'undefined') {
-          try {
-            const journalRef = window.ref(window.rtdb, `accounting/journal/${targetBulan}`);
-            this._journalUnsub = window.onValue(journalRef, (snapshot) => {
-              const data = snapshot.val();
-              if (data) {
-                const listFromDb = Object.entries(data).map(([key, v]) => ({
-                  ...(v || {}),
-                  id: v.id || key
-                })).sort((a, b) => new Date(b.date || b.timestamp || 0) - new Date(a.date || a.timestamp || 0));
-                this.jurnalList = listFromDb;
-                console.log(`[ACCT-APP] 🔄 Realtime journal update: ${listFromDb.length} entries`);
-              } else {
-                this.jurnalList = [];
-              }
-            });
-            console.log(`[ACCT-APP] ✅ Realtime listener attached for journal/${targetBulan}`);
-          } catch (e) {
-            console.warn('[ACCT-APP] Realtime journal listener error:', e);
-          }
-        }
 
         // Normalisasi struktur jurnal jika diperlukan
         // Helper: mapping kode akun → nama
